@@ -1,3 +1,4 @@
+const { logger } = require("../config/logger");
 const User = require("../model/userSchema");
 
 const Admin = {
@@ -12,7 +13,12 @@ const Admin = {
         username,
         email,
       });
-      newUser.save();
+      newUser.save()
+      .then((result) => {
+        logger.log('info', 'User Create', { message: 'User Create ' + result.username });
+      }).catch((err) => {
+        logger.log('error', 'User Create', { message: err });
+      });
       res.status(201).json("User Create succesful !");
     } catch (error) {
       return res.status(500).json(error);
@@ -21,11 +27,11 @@ const Admin = {
   deleteUser: async (req, res) => {
     const { userId } = req.params;
     try {
-      const checkUser = await User.findByIdAndDelete( userId );
+      const checkUser = await User.findByIdAndDelete(userId);
       if (!checkUser) {
         return res.status(404).json("This user Not Found !");
       }
-    
+
       res.status(201).json("User Delete succesful !");
     } catch (error) {
       return res.status(500).json(error);
