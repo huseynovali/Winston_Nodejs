@@ -31,7 +31,7 @@ const Admin = {
       if (!checkUser) {
         return res.status(404).json("This user Not Found !");
       }
-
+      logger.log('info', ' User Delete', { message: ' user deleted.. Id: ' + userId });
       res.status(201).json("User Delete succesful !");
     } catch (error) {
       return res.status(500).json(error);
