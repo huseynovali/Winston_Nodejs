@@ -15,15 +15,22 @@ const Admin = {
       newUser.save();
       res.status(201).json("User Create succesful !");
     } catch (error) {
-       return  res.status(500).json(error)
+      return res.status(500).json(error);
     }
   },
- deleteUser:async()=>{
+  deleteUser: async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const checkUser = await User.findByIdAndDelete( userId );
+      if (!checkUser) {
+        return res.status(404).json("This user Not Found !");
+      }
     
- }
-
-
-
+      res.status(201).json("User Delete succesful !");
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  },
 };
 
 module.exports = Admin;
