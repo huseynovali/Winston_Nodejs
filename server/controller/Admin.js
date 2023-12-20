@@ -13,12 +13,16 @@ const Admin = {
         username,
         email,
       });
-      newUser.save()
-      .then((result) => {
-        logger.log('info', 'User Create', { message: 'User Create ' + result.username });
-      }).catch((err) => {
-        logger.log('error', 'User Create', { message: err });
-      });
+      newUser
+        .save()
+        .then((result) => {
+          logger.log("info", "User Create", {
+            message: "User Create " + result.username,
+          });
+        })
+        .catch((err) => {
+          logger.log("error", "User Create", { message: err });
+        });
       res.status(201).json("User Create succesful !");
     } catch (error) {
       return res.status(500).json(error);
@@ -31,7 +35,9 @@ const Admin = {
       if (!checkUser) {
         return res.status(404).json("This user Not Found !");
       }
-      logger.log('info', ' User Delete', { message: ' user deleted.. Id: ' + userId });
+      logger.log("info", " User Delete", {
+        message: " user deleted.. Id: " + userId,
+      });
       res.status(201).json("User Delete succesful !");
     } catch (error) {
       return res.status(500).json(error);
